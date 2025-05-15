@@ -1,16 +1,8 @@
-package vsu.csf.grushevskaya.CityBeautyficationApp.models;
+package vsu.csf.grushevskaya.CityBeautyficationApp.TO.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.user.UserWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.UserRole;
 
-@Entity(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class UserWithNoIdTO {
     private String username;
     private String moderCode;
     private UserRole userRole;
@@ -18,8 +10,7 @@ public class User {
     private String email;
     private String phoneNumber;
 
-    public User(Integer id, String username, String moderCode, UserRole userRole, String profilePhoto, String email, String phoneNumber) {
-        this.id = id;
+    public UserWithNoIdTO(String username, String moderCode, UserRole userRole, String profilePhoto, String email, String phoneNumber) {
         this.username = username;
         this.moderCode = moderCode;
         this.userRole = userRole;
@@ -28,22 +19,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User() {
-    }
-
-    // конструктор из объекта без id в объект с id = null
-    public User(UserWithNoIdTO userWithNoIdTO) {
-        this.id = null;
-        this.username = userWithNoIdTO.getUsername();
-        this.moderCode = userWithNoIdTO.getModerCode();
-        this.userRole = userWithNoIdTO.getUserRole();
-        this.profilePhoto = userWithNoIdTO.getProfilePhoto();
-        this.email = userWithNoIdTO.getEmail();
-        this.phoneNumber = userWithNoIdTO.getPhoneNumber();
-    }
-
-    public Integer getId() {
-        return id;
+    public UserWithNoIdTO() {
     }
 
     public String getUsername() {

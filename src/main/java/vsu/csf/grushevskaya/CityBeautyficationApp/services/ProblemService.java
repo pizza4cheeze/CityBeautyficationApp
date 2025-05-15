@@ -2,24 +2,33 @@ package vsu.csf.grushevskaya.CityBeautyficationApp.services;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.ProblemTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.ProblemWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithNoIdTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
-import vsu.csf.grushevskaya.CityBeautyficationApp.repositories.ProblemRepositoryInterface;
+import vsu.csf.grushevskaya.CityBeautyficationApp.repositories.ProblemRepository;
 
 @Service
 public class ProblemService {
-    private ProblemRepositoryInterface problemRepository;
+    private ProblemRepository problemRepository;
+    private ExifService exifService;
+    private CategoryService categoryService;
 
-    public ProblemService(ProblemRepositoryInterface problemRepository) {
+    public ProblemService(ProblemRepository problemRepository, ExifService exifService, CategoryService categoryService) {
         this.problemRepository = problemRepository;
+        this.exifService = exifService;
+        this.categoryService = categoryService;
     }
 
-    public Problem save(ProblemWithNoIdTO problemWithNoIdTO) {
+    public Problem createNew(ProblemWithNoIdTO problemWithNoIdTO) {
         return problemRepository.save(new Problem(problemWithNoIdTO));
     }
 
-    public Problem save(Problem problem) {
+//    public Problem createNewByPhoto(ProblemByPhotoTO problemByPhotoTO) {
+//        ExifTO exifTO = exifService.extractExifData(problemByPhotoTO.getPathToPhoto());
+//
+//    }
+
+    public Problem update(Problem problem) {
         return problemRepository.save(problem);
     }
 

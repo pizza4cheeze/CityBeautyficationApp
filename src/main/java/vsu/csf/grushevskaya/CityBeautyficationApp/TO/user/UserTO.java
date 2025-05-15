@@ -1,15 +1,9 @@
-package vsu.csf.grushevskaya.CityBeautyficationApp.models;
+package vsu.csf.grushevskaya.CityBeautyficationApp.TO.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.user.UserWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.User;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.UserRole;
 
-@Entity(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserTO {
     private Integer id;
     private String username;
     private String moderCode;
@@ -18,7 +12,7 @@ public class User {
     private String email;
     private String phoneNumber;
 
-    public User(Integer id, String username, String moderCode, UserRole userRole, String profilePhoto, String email, String phoneNumber) {
+    public UserTO(Integer id, String username, String moderCode, UserRole userRole, String profilePhoto, String email, String phoneNumber) {
         this.id = id;
         this.username = username;
         this.moderCode = moderCode;
@@ -28,22 +22,25 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User() {
+    public UserTO(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.moderCode = user.getModerCode();
+        this.userRole = user.getUserRole();
+        this.profilePhoto = user.getProfilePhoto();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
     }
 
-    // конструктор из объекта без id в объект с id = null
-    public User(UserWithNoIdTO userWithNoIdTO) {
-        this.id = null;
-        this.username = userWithNoIdTO.getUsername();
-        this.moderCode = userWithNoIdTO.getModerCode();
-        this.userRole = userWithNoIdTO.getUserRole();
-        this.profilePhoto = userWithNoIdTO.getProfilePhoto();
-        this.email = userWithNoIdTO.getEmail();
-        this.phoneNumber = userWithNoIdTO.getPhoneNumber();
+    public UserTO() {
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {

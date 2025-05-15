@@ -7,7 +7,7 @@ import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
 import java.util.List;
 
 @Repository
-public interface ProblemRepositoryInterface extends JpaRepository<Problem, Integer> {
+public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     Problem save(Problem problem);
     Problem getById(Integer id);
     List<Problem> getAllByTitle(String title);

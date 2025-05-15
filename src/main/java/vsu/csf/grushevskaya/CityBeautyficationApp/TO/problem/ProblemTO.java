@@ -1,8 +1,11 @@
-package vsu.csf.grushevskaya.CityBeautyficationApp.TO;
+package vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem;
+
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
 
 import java.time.LocalDateTime;
 
-public class ProblemWithNoIdTO {
+public class ProblemTO {
+    private Integer id;
     private String title;
     private String description;
     private Integer categoryId;
@@ -14,9 +17,10 @@ public class ProblemWithNoIdTO {
     private Double yCoordinate;
     private LocalDateTime creationDate;
 
-    public ProblemWithNoIdTO(String title, String description, Integer categoryId, Integer statusId,
-                             Integer lastUpvotedUserId, int upvoteAmount, Integer authorId, Double xCoordinate,
-                             Double yCoordinate, LocalDateTime creationDate) {
+    public ProblemTO(Integer id, String title, String description, Integer categoryId, Integer statusId,
+                     Integer lastUpvotedUserId, int upvoteAmount, Integer authorId, Double xCoordinate,
+                     Double yCoordinate, LocalDateTime creationDate) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.categoryId = categoryId;
@@ -29,7 +33,26 @@ public class ProblemWithNoIdTO {
         this.creationDate = creationDate;
     }
 
-    public ProblemWithNoIdTO() {
+    public ProblemTO(Problem problem) {
+        this.id = problem.getId();
+        this.title = problem.getTitle();
+        this.description = problem.getDescription();
+        this.categoryId = problem.getCategoryId();
+        this.statusId = problem.getStatusId();
+        this.lastUpvotedUserId = problem.getLastUpvotedUserId();
+        this.upvoteAmount = problem.getUpvoteAmount();
+        this.authorId = problem.getAuthorId();
+        this.xCoordinate = problem.getxCoordinate();
+        this.yCoordinate = problem.getyCoordinate();
+        this.creationDate = problem.getCreationDate();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {

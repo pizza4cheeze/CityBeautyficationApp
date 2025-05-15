@@ -1,8 +1,8 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.controllers;
 
 import org.springframework.web.bind.annotation.*;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.ProblemTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.ProblemWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithNoIdTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
 import vsu.csf.grushevskaya.CityBeautyficationApp.services.ProblemService;
 
@@ -19,12 +19,17 @@ public class ProblemController {
 
     @PostMapping(path = "/add-new")
     public Problem addNewProblem(@RequestBody ProblemWithNoIdTO problemWithNoIdTO) {
-        return problemService.save(problemWithNoIdTO);
+        return problemService.createNew(problemWithNoIdTO);
     }
+
+//    @PostMapping(path = "/add-new")
+//    public Problem addNewProblem(@RequestBody String pathToPhoto) {
+//        return problemService.createNew()
+//    }
 
     @PutMapping(path = "/update")
     public Problem updateProblem(@RequestBody Problem problem) {
-        return problemService.save(problem);
+        return problemService.update(problem);
     }
 
     @GetMapping(path = "/{id}")
