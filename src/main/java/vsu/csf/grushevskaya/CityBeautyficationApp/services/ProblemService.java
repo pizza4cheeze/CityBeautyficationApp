@@ -39,7 +39,7 @@ public class ProblemService {
     }
 
     public List<Problem> findByTitle(String title) {
-        return problemRepository.getAllByTitle(title);
+        return problemRepository.getAllByTitleContainsIgnoreCase(title);
     }
 
     public List<Problem> findByCategory(Integer categoryId) {

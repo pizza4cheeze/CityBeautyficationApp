@@ -32,11 +32,11 @@ public class User {
     }
 
     // конструктор из объекта без id в объект с id = null
-    public User(UserWithNoIdTO userWithNoIdTO) {
+    public User(UserWithNoIdTO userWithNoIdTO, boolean isAdmin) {
         this.id = null;
         this.username = userWithNoIdTO.getUsername();
         this.moderCode = userWithNoIdTO.getModerCode();
-        this.userRole = userWithNoIdTO.getUserRole();
+        this.userRole = isAdmin ? UserRole.ROLE_MODERATOR : UserRole.ROLE_USER;
         this.profilePhoto = userWithNoIdTO.getProfilePhoto();
         this.email = userWithNoIdTO.getEmail();
         this.phoneNumber = userWithNoIdTO.getPhoneNumber();

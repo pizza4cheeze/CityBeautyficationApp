@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User save(User user);
     User getById(Integer id);
-    List<User> getAllByUsername(String username);
+    List<User> getAllByUsernameContainsIgnoreCase(String username);
     void deleteById(Integer id);
 }

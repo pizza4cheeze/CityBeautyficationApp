@@ -1,9 +1,6 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.controllers;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.user.UserTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.user.UserWithNoIdTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.User;
@@ -16,37 +13,46 @@ import java.util.List;
 public class UserController {
     private UserService userService;
 
-    @RequestMapping(path = "/register")
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping(path = "/register")
     public User registerNewUser(@RequestBody UserWithNoIdTO userWithNoIdTO) {
         return userService.createNewUser(userWithNoIdTO);
     }
 
-    @RequestMapping(path = "/update")
+    @PostMapping(path = "/register-admin")
+    public User registerNewAdmin(@RequestBody UserWithNoIdTO userWithNoIdTO) {
+        return userService.createNewAdmin(userWithNoIdTO);
+    }
+
+    @PutMapping(path = "/update")
     public User updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
     }
 
-    @RequestMapping(path = "/ban")
+    @PutMapping(path = "/ban")
     public User banUser(@RequestBody User user) {
         return userService.banUser(user);
     }
 
-    @RequestMapping(path = "/unban")
+    @PutMapping(path = "/unban")
     public User unbanUser(@RequestBody User user) {
         return userService.unbanUser(user);
     }
 
-    @RequestMapping(path = "/{id}")
+    @GetMapping(path = "/{id}")
     public UserTO findUserById(@PathVariable Integer id) {
         return userService.findById(id);
     }
 
-    @RequestMapping(path = "/find/{username}")
-    public List<User> findUsersByUsername(@PathVariable String username) {
+    @GetMapping(path = "/find-by-username")
+    public List<User> findUsersByUsername(@RequestBody String username) {
         return userService.findByUserName(username);
     }
 
-    @RequestMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public void deleteUserById(@PathVariable Integer id) {
         userService.deleteById(id);
     }

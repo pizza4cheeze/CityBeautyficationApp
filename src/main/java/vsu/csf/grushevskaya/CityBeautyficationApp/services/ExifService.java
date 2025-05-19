@@ -18,10 +18,8 @@ public class ExifService {
         ExifTO exif = new ExifTO();
 
         try {
-            // Чтение метаданных
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
 
-            // 1. Извлечение GPS-координат
             GpsDirectory gpsDirectory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
             if (gpsDirectory != null) {
                 double latitude = gpsDirectory.getGeoLocation().getLatitude();
@@ -32,7 +30,6 @@ public class ExifService {
                 System.out.println("GPS данные не найдены.");
             }
 
-            // 2. Извлечение даты съемки (DateTimeOriginal) или даты изменения файла
             ExifSubIFDDirectory exifDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
             if (exifDirectory != null) {
                 Date date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
@@ -44,7 +41,6 @@ public class ExifService {
                 System.out.println("EXIF данные не найдены.");
             }
 
-            // 3. Дата изменения файла (системная)
             System.out.println("File Modified Date: " + new Date(imageFile.lastModified()));
             exif.setFileModifiedDate(new Date(imageFile.lastModified()));
 

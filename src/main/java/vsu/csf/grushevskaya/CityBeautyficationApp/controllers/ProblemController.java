@@ -49,7 +49,6 @@ public class ProblemController {
 
     @GetMapping(path = "/search")
     public List<Problem> findProblemsByTitle(@RequestBody String title) {
-        List<Problem> temp = problemService.findByTitle(title);
-        return temp;
+        return problemService.findByTitle(title);
     }
 }

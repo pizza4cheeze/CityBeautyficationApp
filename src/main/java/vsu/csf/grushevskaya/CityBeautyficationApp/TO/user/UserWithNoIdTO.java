@@ -1,19 +1,18 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.TO.user;
 
-import vsu.csf.grushevskaya.CityBeautyficationApp.models.UserRole;
+import jakarta.validation.constraints.Email;
 
 public class UserWithNoIdTO {
     private String username;
     private String moderCode;
-    private UserRole userRole;
     private String profilePhoto;
+    @Email
     private String email;
     private String phoneNumber;
 
-    public UserWithNoIdTO(String username, String moderCode, UserRole userRole, String profilePhoto, String email, String phoneNumber) {
+    public UserWithNoIdTO(String username, String moderCode, String profilePhoto, String email, String phoneNumber) {
         this.username = username;
         this.moderCode = moderCode;
-        this.userRole = userRole;
         this.profilePhoto = profilePhoto;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -36,14 +35,6 @@ public class UserWithNoIdTO {
 
     public void setModerCode(String moderCode) {
         this.moderCode = moderCode;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
     }
 
     public String getProfilePhoto() {

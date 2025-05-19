@@ -18,7 +18,11 @@ public class UserService {
     }
 
     public User createNewUser(UserWithNoIdTO userWithNoIdTO) {
-        return userRepository.save(new User(userWithNoIdTO));
+        return userRepository.save(new User(userWithNoIdTO, false));
+    }
+
+    public User createNewAdmin(UserWithNoIdTO userWithNoIdTO) {
+        return userRepository.save(new User(userWithNoIdTO, true));
     }
 
     public User updateUserInfo(User user) {
@@ -41,7 +45,7 @@ public class UserService {
     }
 
     public List<User> findByUserName(String username) {
-        return userRepository.getAllByUsername(username);
+        return userRepository.getAllByUsernameContainsIgnoreCase(username);
     }
 
     public void deleteById(Integer id) {

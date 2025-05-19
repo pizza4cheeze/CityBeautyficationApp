@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     Problem save(Problem problem);
     Problem getById(Integer id);
-    List<Problem> getAllByTitle(String title);
+    List<Problem> getAllByTitleContainsIgnoreCase(String title);
     List<Problem> getAllByCategoryId(Integer categoryId);
     void deleteById(Integer id);
 }
