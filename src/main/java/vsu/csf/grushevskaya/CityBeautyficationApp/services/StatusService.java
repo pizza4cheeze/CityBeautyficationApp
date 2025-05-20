@@ -20,6 +20,10 @@ public class StatusService {
         return statusToStatusTO(statusRepository.findAll());
     }
 
+    public Status getStatusById(Integer id) {
+        return statusRepository.getById(id);
+    }
+
     private List<StatusTO> statusToStatusTO(List<Status> statusList) {
         List<StatusTO> result = new ArrayList<>();
         for (Status s : statusList) {

@@ -21,6 +21,10 @@ public class CategoryService {
         return categoryToCategoryTO(categoryRepository.findAll());
     }
 
+    public Category getCategoryById(Integer id) {
+        return categoryRepository.getById(id);
+    }
+
     private List<CategoryTO> categoryToCategoryTO(List<Category> categories) {
         List<CategoryTO> result = new ArrayList<>();
         for (Category c : categories) {

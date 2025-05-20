@@ -1,44 +1,25 @@
-package vsu.csf.grushevskaya.CityBeautyficationApp.models;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.comment.CommentWithNoIdTO;
+package vsu.csf.grushevskaya.CityBeautyficationApp.TO.comment;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "comments")
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class CommentWithNoIdTO {
     private Integer problemId;
     private Integer authorId;
+    private String authorUserName;
+    private String authorProfilePhoto;
     private String text;
     private LocalDateTime publicationTime;
 
-    public Comment(Integer id, Integer problemId, Integer authorId, String text, LocalDateTime publicationTime) {
-        this.id = id;
+    public CommentWithNoIdTO(Integer problemId, Integer authorId, String authorUserName, String authorProfilePhoto, String text, LocalDateTime publicationTime) {
         this.problemId = problemId;
         this.authorId = authorId;
+        this.authorUserName = authorUserName;
+        this.authorProfilePhoto = authorProfilePhoto;
         this.text = text;
         this.publicationTime = publicationTime;
     }
 
-    public Comment(CommentWithNoIdTO commentWithNoIdTO) {
-        this.id = null;
-        this.problemId = commentWithNoIdTO.getProblemId();
-        this.authorId = commentWithNoIdTO.getAuthorId();
-        this.text = commentWithNoIdTO.getText();
-        this.publicationTime = commentWithNoIdTO.getPublicationTime();
-    }
-
-    public Comment() {
-    }
-
-    public Integer getId() {
-        return id;
+    public CommentWithNoIdTO() {
     }
 
     public Integer getProblemId() {
@@ -55,6 +36,22 @@ public class Comment {
 
     public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
+    }
+
+    public String getAuthorUserName() {
+        return authorUserName;
+    }
+
+    public void setAuthorUserName(String authorUserName) {
+        this.authorUserName = authorUserName;
+    }
+
+    public String getAuthorProfilePhoto() {
+        return authorProfilePhoto;
+    }
+
+    public void setAuthorProfilePhoto(String authorProfilePhoto) {
+        this.authorProfilePhoto = authorProfilePhoto;
     }
 
     public String getText() {
