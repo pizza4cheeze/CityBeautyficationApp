@@ -1,7 +1,6 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +15,8 @@ public class SheduledTasks {
         this.upvoteService = upvoteService;
     }
 
-    @DeleteMapping(path = "/test")
-//    @Scheduled(fixedRate = 60 * 60 * 1000)
+//    @DeleteMapping(path = "/test")
+    @Scheduled(fixedRate = 60 * 60 * 1000)
     public void cleanUpOldUpvotes() {
         upvoteService.deleteUpvotesOlderThanAWeek();
     }

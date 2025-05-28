@@ -18,6 +18,8 @@ public interface UpvoteRepository extends JpaRepository<Upvote, Integer> {
     List<Upvote> getAllByProblemId(Integer problemId);
     void deleteById(Integer id);
 
+    Upvote findByProblemIdAndUserId(Integer problemId, Integer userId);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM upvotes u WHERE u.datetimeUpvote < :weekAgo")

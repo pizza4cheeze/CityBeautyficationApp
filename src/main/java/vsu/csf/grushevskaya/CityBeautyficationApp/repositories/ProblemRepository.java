@@ -1,6 +1,8 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.repositories;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,4 +27,11 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
             "join users as u on u.id = p.authorId\n" +
             "where p.id = :id")
     ProblemUserViewTO findProblemToUserViewById(@Param("id") Integer id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE problems as p\n" +
+            "set p.upvoteAmount = p.upvoteAmount + 1\n" +
+            "where p.id = :problemId")
+    void incrementUpvoteAmount(@Param("problemId") Integer problemId);
 }

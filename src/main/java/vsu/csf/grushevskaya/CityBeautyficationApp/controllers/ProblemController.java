@@ -2,9 +2,11 @@ package vsu.csf.grushevskaya.CityBeautyficationApp.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.comment.CommentWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ExifAndCategoryTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithCommentsTO;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.exeptions.UpvoteExeption;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.Comment;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
 import vsu.csf.grushevskaya.CityBeautyficationApp.models.Upvote;
@@ -21,15 +23,15 @@ public class ProblemController {
         this.problemService = problemService;
     }
 
-    @PostMapping(path = "/add-new")
-    public Problem addNewProblem(@RequestBody ProblemWithNoIdTO problemWithNoIdTO) {
-        return problemService.createNew(problemWithNoIdTO);
+    @GetMapping(path = "/add-new") // new by photo
+    public ExifAndCategoryTO createNewPhoto(@RequestBody String pathToPhoto) {
+        return problemService.extractDataFromPhoto(pathToPhoto);
     }
 
-//    @PostMapping(path = "/add-new")
-//    public Problem addNewProblem(@RequestBody String pathToPhoto) {
-//        return problemService.createNew()
-//    }
+    @PostMapping(path = "/add-new")
+    public Problem createNewPhoto(@RequestBody ProblemWithNoIdTO problemWithNoIdTO) {
+        return problemService.createNew(problemWithNoIdTO);
+    }
 
     @PutMapping(path = "/update")
     public Problem updateProblem(@RequestBody Problem problem) {
@@ -61,9 +63,13 @@ public class ProblemController {
         return problemService.findByTitle(title);
     }
 
-    @PostMapping(path = "/vote/{userId}/{problemId}")
-    public Upvote voteForProblem(@PathVariable Integer userId, @PathVariable Integer problemId) {
-        return problemService.voteForProblem(userId, problemId);
+    @PostMapping(path = "/vote/{problemId}/{userId}")
+    public Upvote voteForProblem(@PathVariable Integer problemId, @PathVariable Integer userId) throws UpvoteExeption {
+        try {
+            return problemService.voteForProblem(problemId, userId);
+        } catch (UpvoteExeption e) {
+            throw e;
+        }
     }
 
     @PostMapping(path = "/comment")

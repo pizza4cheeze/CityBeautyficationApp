@@ -1,17 +1,17 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.services;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import org.springframework.stereotype.Service;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.comment.CommentWithNoIdTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemUserViewTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithCommentsTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ProblemWithNoIdTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.*;
 import vsu.csf.grushevskaya.CityBeautyficationApp.TO.upvote.UpvoteWithNoIdTO;
-import vsu.csf.grushevskaya.CityBeautyficationApp.models.*;
-import vsu.csf.grushevskaya.CityBeautyficationApp.repositories.CommentRepository;
+import vsu.csf.grushevskaya.CityBeautyficationApp.exeptions.UpvoteExeption;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.Comment;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.Problem;
+import vsu.csf.grushevskaya.CityBeautyficationApp.models.Upvote;
 import vsu.csf.grushevskaya.CityBeautyficationApp.repositories.ProblemRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProblemService {
@@ -35,11 +35,6 @@ public class ProblemService {
     public Problem createNew(ProblemWithNoIdTO problemWithNoIdTO) {
         return problemRepository.save(new Problem(problemWithNoIdTO));
     }
-
-//    public Problem createNewByPhoto(ProblemByPhotoTO problemByPhotoTO) {
-//        ExifTO exifTO = exifService.extractExifData(problemByPhotoTO.getPathToPhoto());
-//
-//    }
 
     public Problem update(Problem problem) {
         return problemRepository.save(problem);
@@ -68,11 +63,21 @@ public class ProblemService {
         problemRepository.deleteById(id);
     }
 
-    public Upvote voteForProblem(Integer userId, Integer problemId) {
+    public Upvote voteForProblem(Integer problemId, Integer userId) throws UpvoteExeption {
+        if (upvoteService.checkUpvoteExists(problemId, userId)) {
+            throw new UpvoteExeption("You already voted for this problem", problemId, userId);
+        }
+        problemRepository.incrementUpvoteAmount(problemId);
         return upvoteService.createUpvote(new UpvoteWithNoIdTO(problemId, userId, LocalDateTime.now()));
     }
 
     public Comment writeACommentForProblem(CommentWithNoIdTO commentWithNoIdTO) {
         return commentService.createComment(commentWithNoIdTO);
+    }
+
+    public ExifAndCategoryTO extractDataFromPhoto(String pathToPhoto) {
+        ExifAndCategoryTO exifAndCategoryTO = exifService.extractData(pathToPhoto);
+        exifAndCategoryTO.setCategoryId(categoryService.categorizePhoto(pathToPhoto));
+        return exifAndCategoryTO;
     }
 }

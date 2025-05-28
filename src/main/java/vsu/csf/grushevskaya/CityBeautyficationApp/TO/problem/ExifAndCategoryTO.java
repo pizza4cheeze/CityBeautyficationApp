@@ -1,21 +1,23 @@
 package vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public class ExifTO {
+public class ExifAndCategoryTO {
     private double gpsLatitude;
     private double gpsLongitude;
-    private Date dateTimeOriginal;
-    private Date fileModifiedDate;
+    private LocalDateTime dateTimeOriginal;
+    private LocalDateTime fileModifiedDate;
+    private Integer categoryId;
 
-    public ExifTO(double gpsLatitude, double gpsLongitude, Date dateTimeOriginal, Date fileModifiedDate) {
+    public ExifAndCategoryTO(double gpsLatitude, double gpsLongitude, LocalDateTime dateTimeOriginal, LocalDateTime fileModifiedDate, Integer categoryId) {
         this.gpsLatitude = gpsLatitude;
         this.gpsLongitude = gpsLongitude;
         this.dateTimeOriginal = dateTimeOriginal;
         this.fileModifiedDate = fileModifiedDate;
+        this.categoryId = categoryId;
     }
 
-    public ExifTO() {
+    public ExifAndCategoryTO() {
     }
 
     public double getGpsLatitude() {
@@ -34,19 +36,27 @@ public class ExifTO {
         this.gpsLongitude = gpsLongitude;
     }
 
-    public Date getDateTimeOriginal() {
+    public LocalDateTime getDateTimeOriginal() {
         return dateTimeOriginal;
     }
 
-    public void setDateTimeOriginal(Date dateTimeOriginal) {
+    public void setDateTimeOriginal(LocalDateTime dateTimeOriginal) {
         this.dateTimeOriginal = dateTimeOriginal;
     }
 
-    public Date getFileModifiedDate() {
+    public LocalDateTime getFileModifiedDate() {
         return fileModifiedDate;
     }
 
-    public void setFileModifiedDate(Date fileModifiedDate) {
+    public void setFileModifiedDate(LocalDateTime fileModifiedDate) {
         this.fileModifiedDate = fileModifiedDate;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 }

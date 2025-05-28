@@ -5,17 +5,20 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 import org.springframework.stereotype.Service;
-import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ExifTO;
+import vsu.csf.grushevskaya.CityBeautyficationApp.TO.problem.ExifAndCategoryTO;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Service
 public class ExifService {
-    public ExifTO extractExifData(String pathToFile) {
-        File imageFile = new File(pathToFile);
+    public ExifAndCategoryTO extractData(String pathToPhoto) {
+        File imageFile = new File(pathToPhoto);
+        ExifAndCategoryTO exif = new ExifAndCategoryTO();
 
-        ExifTO exif = new ExifTO();
+        ZoneId mskZone = ZoneId.of("Europe/Moscow");
 
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
@@ -34,15 +37,26 @@ public class ExifService {
             if (exifDirectory != null) {
                 Date date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
                 if (date == null) {
-                    date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME); // Если оригинальная дата отсутствует
+                    date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME);
                 }
-                exif.setDateTimeOriginal(date);
+
+                if (date != null) {
+                    LocalDateTime dateTime = date.toInstant()
+                            .atZone(mskZone)
+                            .toLocalDateTime();
+                    exif.setDateTimeOriginal(dateTime);
+                }
             } else {
                 System.out.println("EXIF данные не найдены.");
             }
 
-            System.out.println("File Modified Date: " + new Date(imageFile.lastModified()));
-            exif.setFileModifiedDate(new Date(imageFile.lastModified()));
+            Date lastModified = new Date(imageFile.lastModified());
+            LocalDateTime fileModifiedDateTime = lastModified.toInstant()
+                    .atZone(mskZone)
+                    .toLocalDateTime();
+            exif.setFileModifiedDate(fileModifiedDateTime);
+
+            System.out.println("File Modified Date (MSK): " + fileModifiedDateTime);
 
         } catch (Exception e) {
             System.err.println("Ошибка при чтении метаданных: " + e.getMessage());

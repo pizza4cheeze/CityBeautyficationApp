@@ -29,7 +29,25 @@ public class ProblemWithNoIdTO {
         this.creationDate = creationDate;
     }
 
+    public ProblemWithNoIdTO(Integer categoryId, Integer statusId, Integer authorId, ExifAndCategoryTO exifAndCategoryTO) {
+        this.title = null;
+        this.description = null;
+        this.categoryId = categoryId;
+        this.statusId = statusId;
+        this.lastUpvotedUserId = null;
+        this.upvoteAmount = 0;
+        this.authorId = authorId;
+        this.xCoordinate = exifAndCategoryTO.getGpsLatitude();
+        this.yCoordinate = exifAndCategoryTO.getGpsLongitude();
+        this.creationDate = exifAndCategoryTO.getDateTimeOriginal() == null ?
+                exifAndCategoryTO.getFileModifiedDate() : exifAndCategoryTO.getDateTimeOriginal();
+    }
+
     public ProblemWithNoIdTO() {
+    }
+
+    public ProblemWithNoIdTO(Integer userId, ExifAndCategoryTO exifAndCategoryTO) {
+
     }
 
     public String getTitle() {

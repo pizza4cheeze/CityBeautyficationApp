@@ -37,4 +37,8 @@ public class UpvoteService {
         LocalDateTime weekAgo = LocalDateTime.now().minusWeeks(1);
         upvoteRepository.deleteUpvotesOlderThanAWeek(weekAgo);
     }
+
+    public boolean checkUpvoteExists(Integer problemId, Integer userId) {
+        return upvoteRepository.findByProblemIdAndUserId(problemId, userId) != null;
+    }
 }
